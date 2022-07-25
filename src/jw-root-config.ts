@@ -10,8 +10,8 @@ registerApplication({
 });
 
 registerApplication({
-  name: "@jw/react-spa",
-  app: () => System.import('@jw/react-spa'),
+  name: "@jw/grupos-app",
+  app: () => System.import('@jw/grupos-app'),
   activeWhen: ["/react"]
 });
 
