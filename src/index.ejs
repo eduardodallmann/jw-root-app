@@ -15,7 +15,12 @@
       "imports": {
         "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
         "react": "https://cdn.jsdelivr.net/npm/react@16.13.0/umd/react.production.min.js",
-        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.0/umd/react-dom.production.min.js"
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.0/umd/react-dom.production.min.js",
+        "@mui/material": "https://unpkg.com/@mui/material@latest/umd/material-ui.production.min.js",
+        "@emotion/styled": "https://cdn.jsdelivr.net/npm/@emotion/styled@11.10.0/dist/emotion-styled.cjs.min.js",
+        "@emotion/react": "https://cdn.jsdelivr.net/npm/@emotion/react@11.10.0/dist/emotion-react.cjs.min.js",
+        "jotai": "https://cdn.jsdelivr.net/npm/jotai@1.7.7/index.min.js",
+        "moment": "https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js",
       }
     }
   </script>
@@ -31,14 +36,7 @@
       }
     </script>
   <% } else { %>
-    <script type="systemjs-importmap">
-      {
-        "imports": {
-          "@jw/root-config": "../dist/jw-root-config.js",
-          "@jw/grupos-app": "//eduardodallmann.github.io/jw-grupos-app/jw-grupos-app.js"
-        }
-      }
-    </script>
+    <script type="systemjs-importmap" src="https://jw-service-list-mfe.herokuapp.com/"></script>
   <% } %>
 
     <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
