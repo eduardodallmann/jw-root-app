@@ -2,7 +2,7 @@ import { registerApplication, start } from "single-spa";
 import axios from "axios";
 
 axios
-  .get("https://jw-service-list-mfe.herokuapp.com/application")
+  .get("https://jw-service-list-mfe.herokuapp.com/applications")
   .then((resp) => {
     resp.data.forEach(({ name, url, activeWhen, exact }) => {
       registerApplication({
