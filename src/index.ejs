@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Root Config</title>
+  <title>JW Project</title>
   <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.7/runtime.min.js"></script>
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
@@ -21,6 +21,7 @@
         "@emotion/react": "https://cdn.jsdelivr.net/npm/@emotion/react@11.10.0/dist/emotion-react.cjs.min.js",
         "jotai": "https://cdn.jsdelivr.net/npm/jotai@1.7.7/index.min.js",
         "moment": "https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js",
+        "axios": "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
       }
     }
   </script>
@@ -30,13 +31,19 @@
     <script type="systemjs-importmap">
       {
         "imports": {
-          "@jw/root-config": "//localhost:9000/jw-root-config.js",
-          "@jw/grupos-app": "//localhost:8500/jw-grupos-app.js"
+          "@jw/root-config": "//localhost:9000/jw-root-config.js"
         }
       }
     </script>
   <% } else { %>
-    <script type="systemjs-importmap" src="https://jw-service-list-mfe.herokuapp.com/"></script>
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "@jw/root-config": "https://jw-root-app.herokuapp.com/jw-root-config.js",
+        }
+      }
+    </script>
+    <script type="systemjs-importmap" src="https://jw-service-list-mfe.herokuapp.com/systemjs"></script>
   <% } %>
 
     <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>

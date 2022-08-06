@@ -1,19 +1,19 @@
 import { registerApplication, start } from "single-spa";
+import axios from "axios";
 
-registerApplication({
-  name: "@single-spa/welcome",
-  app: () =>
-    System.import(
-      "https://unpkg.com/single-spa-welcome/dist/single-spa-welcome.js"
-    ),
-  activeWhen: ["/"],
-});
-
-registerApplication({
-  name: "@jw/grupos-app",
-  app: () => System.import('@jw/grupos-app'),
-  activeWhen: ["/react"]
-});
+axios
+  .get("https://jw-service-list-mfe.herokuapp.com/application")
+  .then((resp) => {
+    resp.data.forEach(({ name, url, activeWhen, exact }) => {
+      registerApplication({
+        name,
+        app: () => System.import(url),
+        activeWhen: exact
+          ? (location) => location.pathname === `/${activeWhen}`
+          : [`/${activeWhen}`],
+      });
+    });
+  });
 
 start({
   urlRerouteOnly: true,
