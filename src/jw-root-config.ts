@@ -10,11 +10,15 @@ axios
         app: () => System.import(url),
         activeWhen: exact
           ? (location) => location.pathname === `/${activeWhen}`
-          : [`/${activeWhen}`],
+          : [activeWhen],
+      });
+    });
+  })
+  .finally(() => {
+    console.log("finally");
+    System.import("@jw-project/styleguide").then(() => {
+      start({
+        urlRerouteOnly: true,
       });
     });
   });
-
-start({
-  urlRerouteOnly: true,
-});
