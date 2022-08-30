@@ -1,5 +1,5 @@
 {
-  "name": "@jw/root-config",
+  "name": "@jw-project/root-config",
   "scripts": {
     "start": "webpack serve --port 9000 --env isLocal",
     "start:prod": "node ./server.js",

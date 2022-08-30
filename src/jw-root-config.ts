@@ -1,24 +1,47 @@
 import { registerApplication, start } from "single-spa";
 import axios from "axios";
 
+type Response = {
+  data: Array<{
+    activeWhen: string;
+    exact: boolean;
+    isParcel: boolean;
+    name: string;
+    url: string;
+  }>;
+};
+
+const mapper = {
+  //"@jw-project/home-app": "http://localhost:8080/jw-project-home-app.js",
+};
+
 axios
-  .get("https://jw-service-list-mfe.herokuapp.com/applications")
-  .then((resp) => {
-    resp.data.forEach(({ name, url, activeWhen, exact }) => {
+  .get<unknown, Response>(
+    "https://us-central1-jw-project-58cb8.cloudfunctions.net/getMfeApplications"
+  )
+  .then(({ data }) => {
+    if (Object.keys(mapper).length) {
+      data = data.map((d) =>
+        mapper[d.name] ? { ...d, url: mapper[d.name] } : d
+      );
+    }
+
+    data.forEach(({ name, url, activeWhen, exact }) => {
       registerApplication({
         name,
         app: () => System.import(url),
         activeWhen: exact
-          ? (location) => location.pathname === `/${activeWhen}`
+          ? (location) => location.pathname === `${activeWhen}`
           : [activeWhen],
+        customProps: { batatinha: "abc" },
       });
     });
   })
-  .finally(() => {
-    console.log("finally");
-    System.import("@jw-project/styleguide").then(() => {
-      start({
-        urlRerouteOnly: true,
-      });
+  .finally(async () => {
+    await System.import("@jw-project/styleguide");
+    await System.import("@jw-project/app-menu");
+    await System.import("@jw-project/app-navbar");
+    start({
+      urlRerouteOnly: true,
     });
   });
