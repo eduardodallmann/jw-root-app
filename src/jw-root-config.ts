@@ -17,7 +17,7 @@ const mapper = {
 
 axios
   .get<unknown, Response>(
-    "https://us-central1-jw-project-58cb8.cloudfunctions.net/getMfeApplications"
+    "https://jw-project-58cb8-static.web.app/application.json"
   )
   .then(({ data }) => {
     if (Object.keys(mapper).length) {
