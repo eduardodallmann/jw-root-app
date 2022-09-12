@@ -11,6 +11,7 @@ import * as firebaseLibFirestore from "firebase/firestore";
 import { firebaseConfig } from "./firebase-config";
 import { hideLoading, showLoading, showLogin, showApp } from "./control-dom";
 import type { Response } from "./types";
+import { BehaviorSubject } from "rxjs";
 
 const { initializeApp } = firebaseLibApp;
 const {
@@ -26,6 +27,8 @@ const mapper = {
 
 initializeApp(firebaseConfig);
 const auth = getAuth();
+const titleObservable = new BehaviorSubject("titulo padrão");
+const themeObservable = new BehaviorSubject("claro");
 
 async function register(authenticated: boolean) {
   console.log("register authenticated is", authenticated);
@@ -66,6 +69,8 @@ async function register(authenticated: boolean) {
           firebaseLibApp,
           firebaseLibAuth,
           firebaseLibFirestore,
+          titleObservable,
+          themeObservable,
           ...customDomElement,
         },
       });
