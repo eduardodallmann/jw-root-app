@@ -7,8 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>JW Project</title>
   <script src="https://cdn.jsdelivr.net/npm/regenerator-runtime@0.13.7/runtime.min.js"></script>
-  <meta http-equiv="Content-Security-Policy"
-    content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: localhost:*; script-src 'unsafe-inline' 'unsafe-eval' https: localhost:*; connect-src https: localhost:* ws://localhost:*; style-src 'unsafe-inline' https:; object-src 'none';">
   <meta name="importmap-type" content="systemjs-importmap" />
   <script type="systemjs-importmap">
     {
@@ -20,16 +19,15 @@
         "@emotion/react": "https://cdn.jsdelivr.net/npm/@emotion/react@11.8.2/dist/emotion-react.umd.min.js",
         "@emotion/styled": "https://cdn.jsdelivr.net/npm/@emotion/styled@11.8.1/dist/emotion-styled.umd.min.js",
         "jotai": "https://cdn.jsdelivr.net/npm/jotai@1.7.7/index.min.js",
-        "moment": "https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js",
-        "axios": "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+        "moment": "https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"
       }
     }
   </script>
   <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" as="script">
 
   <% if (isLocal) { %>
-    <script type="systemjs-importmap">
-      {
+  <script type="systemjs-importmap">
+    {
         "imports": {
           "@jw-project/root-config": "//localhost:9000/jw-root-config.js",
           "@jw-project/home-app": "//localhost:8081/jw-project-home-app.js"
@@ -37,8 +35,8 @@
       }
     </script>
   <% } else { %>
-    <script type="systemjs-importmap">
-      {
+  <script type="systemjs-importmap">
+    {
         "imports": {
           "@jw-project/root-config": "//jw-project-58cb8.web.app/jw-root-config.js"
         }
@@ -47,22 +45,31 @@
   <% } %>
   <script type="systemjs-importmap" src="https://jw-project-58cb8-static.web.app/systemjs.json"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
-    <% if (isLocal) { %>
-    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.js"></script>
-    <% } else { %>
-    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
-    <% } %>
+  <script src="https://cdn.jsdelivr.net/npm/import-map-overrides@2.2.0/dist/import-map-overrides.js"></script>
+  <% if (isLocal) { %>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.js"></script>
+  <% } else { %>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/systemjs@6.8.3/dist/extras/amd.min.js"></script>
+  <% } %>
 </head>
 
 <body>
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
-  <div id="single-spa-application:@jw-project/app-navbar"></div>
-  <div id="single-spa-application:@jw-project/app-menu"></div>
+  <div id="root-loading" style="display: none;">
+    <!-- <div id="single-spa-application:@jw-project/app-loading"></div> -->
+  </div>
+  <div id="root-login" style="display: none;">
+    <div id="single-spa-application:@jw-project/app-login"></div>
+  </div>
+  <div id="root-apps" style="display: none;">
+    <div id="single-spa-application:@jw-project/app-navbar"></div>
+    <div id="single-spa-application:@jw-project/app-menu"></div>
+    <div id="root-apps-route"></div>
+  </div>
   <script>
     System.import('@jw-project/root-config');
   </script>
