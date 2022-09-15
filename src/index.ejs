@@ -12,14 +12,14 @@
   <script type="systemjs-importmap">
     {
       "imports": {
-        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js",
-        "react": "https://cdn.jsdelivr.net/npm/react@16.13.0/umd/react.production.min.js",
-        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@16.13.0/umd/react-dom.production.min.js",
-        "@mui/material": "https://unpkg.com/@mui/material@5.4.3/umd/material-ui.production.min.js",
-        "@emotion/react": "https://cdn.jsdelivr.net/npm/@emotion/react@11.8.2/dist/emotion-react.umd.min.js",
-        "@emotion/styled": "https://cdn.jsdelivr.net/npm/@emotion/styled@11.8.1/dist/emotion-styled.umd.min.js",
-        "jotai": "https://cdn.jsdelivr.net/npm/jotai@1.7.7/index.min.js",
-        "moment": "https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"
+        "single-spa": "https://cdn.jsdelivr.net/npm/single-spa@latest/lib/system/single-spa.min.js",
+        "react": "https://cdn.jsdelivr.net/npm/react@latest/umd/react.production.min.js",
+        "react-dom": "https://cdn.jsdelivr.net/npm/react-dom@latest/umd/react-dom.production.min.js",
+        "@mui/material": "https://unpkg.com/@mui/material@latest/umd/material-ui.production.min.js",
+        "@emotion/react": "https://cdn.jsdelivr.net/npm/@emotion/react@latest/dist/emotion-react.umd.min.js",
+        "@emotion/styled": "https://cdn.jsdelivr.net/npm/@emotion/styled@latest/dist/emotion-styled.umd.min.js",
+        "jotai": "https://cdn.jsdelivr.net/npm/jotai@latest/index.min.js",
+        "moment": "https://cdn.jsdelivr.net/npm/moment@latest/moment.min.js"
       }
     }
   </script>
@@ -67,8 +67,10 @@
   </div>
   <div id="root-apps" style="display: none;">
     <div id="single-spa-application:@jw-project/app-navbar"></div>
-    <div id="single-spa-application:@jw-project/app-menu"></div>
-    <div id="root-apps-route"></div>
+    <div id="side-by-side-menu-apps">
+      <div id="single-spa-application:@jw-project/app-menu"></div>
+      <div id="root-apps-route"></div>
+    </div>
   </div>
   <script>
     System.import('@jw-project/root-config');

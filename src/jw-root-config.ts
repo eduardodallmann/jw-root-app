@@ -10,7 +10,7 @@ import * as firebaseLibAuth from "firebase/auth";
 import * as firebaseLibFirestore from "firebase/firestore";
 import { firebaseConfig } from "./firebase-config";
 import { hideLoading, showLoading, showLogin, showApp } from "./control-dom";
-import type { Response } from "./types";
+import type { ApplicationCustomProps, Response } from "./types";
 import { BehaviorSubject } from "rxjs";
 
 const { initializeApp } = firebaseLibApp;
@@ -59,7 +59,7 @@ async function register(authenticated: boolean) {
         customDomElement.domElement =
           document.getElementById("root-apps-route");
       }
-      registerApplication({
+      registerApplication<ApplicationCustomProps>({
         name,
         app: () => System.import(url),
         activeWhen: exact
@@ -83,9 +83,12 @@ async function register(authenticated: boolean) {
 async function runRoot() {
   await System.import("@jw-project/styleguide");
 
-  mountRootParcel(() => System.import("@jw-project/app-loading"), {
-    domElement: document.getElementById("root-loading"),
-  });
+  const loadingParcel = mountRootParcel<{}>(
+    () => System.import("@jw-project/app-loading"),
+    {
+      domElement: document.getElementById("root-loading"),
+    }
+  );
 
   showLoading();
 
@@ -117,8 +120,9 @@ async function runRoot() {
 
       showLogin();
     })
-    .finally(() => {
+    .finally(async () => {
       hideLoading();
+      await loadingParcel.unmount();
     });
 }
 
