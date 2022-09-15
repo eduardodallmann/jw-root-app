@@ -1,7 +1,7 @@
-import * as firebaseLibApp from "firebase/app";
-import * as firebaseLibAuth from "firebase/auth";
-import * as firebaseLibFirestore from "firebase/firestore";
-import { BehaviorSubject } from "rxjs";
+import type * as firebaseLibApp from "firebase/app";
+import type * as firebaseLibAuth from "firebase/auth";
+import type * as firebaseLibFirestore from "firebase/firestore";
+import type { BehaviorSubject } from "rxjs";
 
 export type Response = {
   data: Array<{
