@@ -59,7 +59,7 @@ async function register(authenticated: boolean) {
         customDomElement.domElement =
           document.getElementById("root-apps-route");
       }
-      registerApplication<ApplicationCustomProps>({
+      registerApplication<Omit<ApplicationCustomProps, "name">>({
         name,
         app: () => System.import(url),
         activeWhen: exact

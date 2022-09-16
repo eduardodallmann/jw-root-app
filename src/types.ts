@@ -15,6 +15,7 @@ export type Response = {
 };
 
 export type ApplicationCustomProps = {
+  name: string;
   firebaseLibApp: typeof firebaseLibApp;
   firebaseLibAuth: typeof firebaseLibAuth;
   firebaseLibFirestore: typeof firebaseLibFirestore;
