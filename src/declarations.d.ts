@@ -1,3 +1,7 @@
+declare module "@jw-project/api" {
+  export * from "@jw-project/api/src/jw-project-api";
+}
+
 declare module "*.html" {
   const rawHtmlFile: string;
   export = rawHtmlFile;

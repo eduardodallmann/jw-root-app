@@ -5,28 +5,15 @@ import {
   mountRootParcel,
 } from "single-spa";
 import axios from "axios";
-import * as firebaseLibApp from "firebase/app";
-import * as firebaseLibAuth from "firebase/auth";
-import * as firebaseLibFirestore from "firebase/firestore";
-import { firebaseConfig } from "./firebase-config";
 import { hideLoading, showLoading, showLogin, showApp } from "./control-dom";
-import type { ApplicationCustomProps, Response } from "./types";
+import type { Response } from "./types";
 import { BehaviorSubject } from "rxjs";
-
-const { initializeApp } = firebaseLibApp;
-const {
-  getAuth,
-  getRedirectResult,
-  setPersistence,
-  indexedDBLocalPersistence,
-} = firebaseLibAuth;
+import { verifyIsAuthenticated, ApplicationCustomProps } from "@jw-project/api";
 
 const mapper = {
-  // "@jw-project/home-app": "http://localhost:8600/jw-project-home-app.js",
+  // "@jw-project/mfe-home": "http://localhost:8600/jw-project-mfe-home.js",
 };
 
-initializeApp(firebaseConfig);
-const auth = getAuth();
 const titleObservable = new BehaviorSubject("titulo padrão");
 const themeObservable = new BehaviorSubject("claro");
 
@@ -66,9 +53,6 @@ async function register(authenticated: boolean) {
           ? (location) => location.pathname === `${activeWhen}`
           : [activeWhen],
         customProps: {
-          firebaseLibApp,
-          firebaseLibAuth,
-          firebaseLibFirestore,
           titleObservable,
           themeObservable,
           ...customDomElement,
@@ -81,6 +65,7 @@ async function register(authenticated: boolean) {
 }
 
 async function runRoot() {
+  await System.import("@jw-project/api");
   await System.import("@jw-project/styleguide");
 
   const loadingParcel = mountRootParcel<{}>(
@@ -92,13 +77,9 @@ async function runRoot() {
 
   showLoading();
 
-  getRedirectResult(auth)
-    .then(async (result) => {
-      console.log("then------------", result);
-      await setPersistence(auth, indexedDBLocalPersistence);
-      console.log("currentUser is:", auth.currentUser);
-
-      const data = await register(Boolean(auth.currentUser));
+  await verifyIsAuthenticated(
+    async (_, currentUser) => {
+      const data = await register(Boolean(currentUser));
 
       for (const { name } of data.filter(({ isStructural }) => isStructural)) {
         await System.import(name);
@@ -108,22 +89,22 @@ async function runRoot() {
         urlRerouteOnly: true,
       });
       showApp();
-    })
-    .catch(async (e) => {
-      console.log("catch--------", e);
+    },
+    async (currentUser) => {
       await System.import("@jw-project/app-login");
-      await register(Boolean(auth.currentUser));
+      await register(Boolean(currentUser));
 
       start({
         urlRerouteOnly: true,
       });
 
       showLogin();
-    })
-    .finally(async () => {
+    },
+    async () => {
       hideLoading();
       await loadingParcel.unmount();
-    });
+    }
+  );
 }
 
 runRoot();
