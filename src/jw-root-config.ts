@@ -8,7 +8,7 @@ import axios from "axios";
 import { hideLoading, showLoading, showLogin, showApp } from "./control-dom";
 import type { Response } from "./types";
 import { BehaviorSubject } from "rxjs";
-import { verifyIsAuthenticated, ApplicationCustomProps } from "@jw-project/api";
+import { auth, types } from "@jw-project/api";
 
 const mapper = {
   // "@jw-project/mfe-home": "http://localhost:8600/jw-project-mfe-home.js",
@@ -46,7 +46,7 @@ async function register(authenticated: boolean) {
         customDomElement.domElement =
           document.getElementById("root-apps-route");
       }
-      registerApplication<Omit<ApplicationCustomProps, "name">>({
+      registerApplication<Omit<types.ApplicationCustomProps, "name">>({
         name,
         app: () => System.import(url),
         activeWhen: exact
@@ -65,7 +65,6 @@ async function register(authenticated: boolean) {
 }
 
 async function runRoot() {
-  await System.import("@jw-project/api");
   await System.import("@jw-project/styleguide");
 
   const loadingParcel = mountRootParcel<{}>(
@@ -77,7 +76,9 @@ async function runRoot() {
 
   showLoading();
 
-  await verifyIsAuthenticated(
+  await System.import("@jw-project/api");
+
+  await auth.verifyIsAuthenticated(
     async (_, currentUser) => {
       const data = await register(Boolean(currentUser));
 
